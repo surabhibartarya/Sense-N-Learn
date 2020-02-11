@@ -1,0 +1,42 @@
+<div class="wrapper">
+    <div class="row">
+        <div class="col-xs-12 imgcontainer">
+            <a href="#"><img src="assets/images/accenturelogo.png" alt="accenturelogo"></a>
+        </div>
+        <div class="col-xs-12 headingcont">
+            <h2>SENSE & LEARN – LIVE SUPPLY CHAIN INFORMATICS</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6 loginformcont">
+            <form #loginform="ngForm" (ngSubmit)="login(loginform)">
+
+                <div class="form-group" 
+                [class.has-error]="userName.invalid && userName.touched"
+                [class.has-success] = "userName.valid"
+                >
+                    <label for="username" class="control-label">Username</label>
+                    <input required class="form-control" type="text" 
+                    id="username" name="username" [(ngModel)]="username" 
+                    placeholder="Username" #userName="ngModel">
+                    <span class="help-block" *ngIf="userName.invalid && userName.touched">Username is required.</span>
+                </div> 
+                
+                <div class="form-group" 
+                [class.has-error]="passWord.invalid && passWord.touched"
+                [class.has-success] = "passWord.valid"
+                >
+                    <label for="password" class="control-label">Password</label>
+                    <input required class="form-control" type="password" 
+                    id="password" name="password" [(ngModel)]="password" 
+                    placeholder="Password" #passWord="ngModel">
+                    <span class="help-block" *ngIf="passWord.invalid && passWord.touched">Password is required.</span>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="loginform.invalid">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--<div>{{ loginform.value | json}}</div>-->
+

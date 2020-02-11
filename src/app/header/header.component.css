@@ -1,0 +1,56 @@
+/* .accnlogo{
+    border-right: 1px solid;
+} */
+.accnlogo img{
+    width: 7vw;
+    padding: 28px 0px;
+
+}
+.navbar-default h3{
+    font-weight: bold;
+    color: #002060;
+    padding: 10px 0px;
+    text-align: center;
+}
+/* .headernaviconcollection{
+    border-left: 1px solid;
+    border-right: 1px solid;
+} */
+.headernaviconcollection li a{
+    display:inline-block;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    padding: 15px 6px;
+    color: #002060;
+}
+.headernaviconcollection li a img{
+    height: 30px;
+}
+.headernaviconcollection li a span{
+    display: block;
+    
+}
+
+.logoutdetails div{
+    
+    padding: 15px 0px;
+}
+.personaimg img{
+    height: 55px;
+}
+.logoutBtn img{
+    height: 25px;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.personadetails p{
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    width: 100%;
+    margin-left: 10px;
+    /* display: inline-block; */
+    margin-top: 8px;
+}

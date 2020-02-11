@@ -1,0 +1,29 @@
+.wrapper{
+    background: url("../../assets/images/SNLimage.jpg");
+    height: 100vh;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.imgcontainer a{
+    display: block;
+    padding: 20px 0px;
+}
+.imgcontainer img{
+    height: 50px;
+}
+.headingcont h2{
+    font-weight: bold;
+    font-size: 30px;
+    color: #002060;
+    letter-spacing: -1.5px;
+}
+.loginformcont{
+    padding: 20px 10px;
+}
+.loginformcont label{
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #002060;
+}
+
