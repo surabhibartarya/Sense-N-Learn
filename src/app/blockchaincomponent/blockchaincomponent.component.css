@@ -1,0 +1,56 @@
+.blockchainmessage{
+    background-color: #f8f8f8;
+    padding: 10px;
+}
+.blockchainmessage p{
+    display: inline-block;
+    width:  50%;
+    text-align: left;
+}
+
+.blockchainmessage p:first-child{
+    text-transform: uppercase;
+    font-weight: bold;
+    color: black;
+    display: inline-block;
+}
+.blockchainstatus{
+    background-color: #f8f8f8;
+    box-shadow: 2px 2px 5px blueviolet;
+    padding: 2px;
+    border: 1px solid purple;
+}
+.blockchainstatus h4{
+    text-align: center;
+    color:#000;
+    font-weight: bold;
+}
+.blockchainstatus p{
+    text-align: center;
+    color:#000;
+    font-size: 12px;
+    font-weight: bold;
+   
+}
+.blockchainno{
+    width: 100%;
+    overflow: hidden;
+    white-space: initial;
+    word-break: break-all;
+    font-weight: normal !important;
+    
+}
+.picturedisplay{
+    margin: 10px 0px;
+}
+.picturedisplay ul li{
+    display: inline-block;
+    list-style-type: none;
+    margin-right: 2%;
+}
+.textstyling{
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+}

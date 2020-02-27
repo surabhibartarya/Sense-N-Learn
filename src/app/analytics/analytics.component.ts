@@ -88,6 +88,7 @@ export class AnalyticsComponent implements OnInit {
       chartArea:{left:0,width:'50%',height:'75%'},
       colors:['CDCDCD','white'],
       pieSliceBorderColor:'#6f30a0',
+      width: 200,
       legend:'none'
    }
 
@@ -103,6 +104,7 @@ export class AnalyticsComponent implements OnInit {
       chartArea:{left:0,width:'50%',height:'75%'},
       colors:['CDCDCD','white'],
       pieSliceBorderColor:'#6f30a0',
+      width: 200,
       legend:'none'
    }
 
@@ -118,6 +120,7 @@ export class AnalyticsComponent implements OnInit {
       chartArea:{left:0,width:'50%',height:'75%'},
       colors:['CDCDCD','white'],
       pieSliceBorderColor:'#6f30a0',
+      width: 200,
       legend:'none'
    }
 

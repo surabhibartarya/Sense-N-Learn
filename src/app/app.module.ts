@@ -11,12 +11,14 @@ import { HeaderComponent } from './header/header.component';
 import { LocationComponent } from './location/location.component';
 import { AnalyticsComponent } from './analytics/analytics.component';
 import { GooglePieChartServiceService } from './google-pie-chart-service.service';
+import { BlockchaincomponentComponent } from './blockchaincomponent/blockchaincomponent.component';
 
 const appRoutes:Routes = [
   { path:'login', component:LoginComponent },
   { path:'home', component:HomeComponent },
   { path:'location', component:LocationComponent },
   { path:'analytics', component:AnalyticsComponent },
+  { path:'blockchain', component:BlockchaincomponentComponent },
   { path: '', redirectTo: '/login',pathMatch: 'full'}
 ];
 
@@ -27,7 +29,8 @@ const appRoutes:Routes = [
     HomeComponent,
     HeaderComponent,
     LocationComponent,
-    AnalyticsComponent
+    AnalyticsComponent,
+    BlockchaincomponentComponent
   ],
   imports: [
     BrowserModule,
