@@ -61,6 +61,18 @@
         </ul>
         
     </div>
+    <mat-horizontal-stepper>
+        <mat-step *ngFor= "let i of steps">
+          <!-- <form [formGroup]="firstFormGroup">
+            <mat-form-field>
+              <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form> -->
+        </mat-step>
+      </mat-horizontal-stepper>
 </div>
 <div class="row">
     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">

@@ -12,6 +12,8 @@ import { LocationComponent } from './location/location.component';
 import { AnalyticsComponent } from './analytics/analytics.component';
 import { GooglePieChartServiceService } from './google-pie-chart-service.service';
 import { BlockchaincomponentComponent } from './blockchaincomponent/blockchaincomponent.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatStepperModule} from '@angular/material/stepper';
 
 const appRoutes:Routes = [
   { path:'login', component:LoginComponent },
@@ -36,7 +38,9 @@ const appRoutes:Routes = [
     BrowserModule,
     FormsModule,
     GoogleChartsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    BrowserAnimationsModule,
+    MatStepperModule
   ],
   providers: [GooglePieChartServiceService],
   bootstrap: [AppComponent]

@@ -1,3 +1,4 @@
+
 .blockchainmessage{
     background-color: #f8f8f8;
     padding: 10px;
@@ -54,3 +55,122 @@
     font-weight: bold;
     text-transform: uppercase;
 }
+
+
+/***New One ***/
+
+.mat-stepper-horizontal, .mat-stepper-vertical{
+    margin-top: -24px;
+    margin-bottom: -24px;
+    margin-left: 5%;
+    margin-right: 5%;}
+   
+:host /deep/ mat-step-header .mat-step-label {
+    overflow: visible;
+}
+:host /deep/ mat-step-header:nth-of-type(1) .mat-step-icon-not-touched span, :host /deep/ mat-step-header:nth-of-type(1) .mat-step-icon span, :host /deep/ mat-step-header:nth-of-type(1) .mat-step-icon-not-touched .mat-icon, :host /deep/ mat-step-header:nth-of-type(1) .mat-step-icon .mat-icon {
+    display: none;
+}
+:host /deep/ mat-step-header:nth-of-type(1) .mat-step-icon {
+    height: 20px;
+    width: 20px;
+    background-color: green;
+}
+:host /deep/ mat-step-header:nth-of-type(1) .mat-step-icon-not-touched:after, :host /deep/ mat-step-header:nth-of-type(1) .mat-step-icon:after {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    background-color: green;
+}
+:host /deep/ mat-step-header:nth-of-type(2) .mat-step-icon-not-touched span, :host /deep/ mat-step-header:nth-of-type(2) .mat-step-icon span, :host /deep/ mat-step-header:nth-of-type(2) .mat-step-icon-not-touched .mat-icon, :host /deep/ mat-step-header:nth-of-type(2) .mat-step-icon .mat-icon {
+    display: none;
+}
+:host /deep/ mat-step-header:nth-of-type(2) .mat-step-icon {
+    height: 20px;
+    width: 20px;
+    background-color: green;
+}
+:host /deep/ mat-step-header:nth-of-type(2) .mat-step-icon-not-touched:after, :host /deep/ mat-step-header:nth-of-type(2) .mat-step-icon:after {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    background-color: green;
+}
+:host /deep/ mat-step-header:nth-of-type(3) .mat-step-icon-not-touched span, :host /deep/ mat-step-header:nth-of-type(3) .mat-step-icon span, :host /deep/ mat-step-header:nth-of-type(3) .mat-step-icon-not-touched .mat-icon, :host /deep/ mat-step-header:nth-of-type(3) .mat-step-icon .mat-icon {
+    display: none;
+}
+:host /deep/ mat-step-header:nth-of-type(3) .mat-step-icon {
+    height: 20px;
+    width: 20px;
+    background-color: green;
+}
+:host /deep/ mat-step-header:nth-of-type(3) .mat-step-icon-not-touched:after, :host /deep/ mat-step-header:nth-of-type(3) .mat-step-icon:after {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    background-color: green;
+}
+:host /deep/ mat-step-header:nth-of-type(4) .mat-step-icon-not-touched span, :host /deep/ mat-step-header:nth-of-type(4) .mat-step-icon span, :host /deep/ mat-step-header:nth-of-type(4) .mat-step-icon-not-touched .mat-icon, :host /deep/ mat-step-header:nth-of-type(4) .mat-step-icon .mat-icon {
+    display: none;
+}
+:host /deep/ mat-step-header:nth-of-type(4) .mat-step-icon {
+    height: 20px;
+    width: 20px;
+    background-color: red;
+}
+:host /deep/ mat-step-header:nth-of-type(4) .mat-step-icon-not-touched:after, :host /deep/ mat-step-header:nth-of-type(4) .mat-step-icon:after {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    background-color: red;
+}
+:host /deep/ mat-step-header:nth-of-type(5) .mat-step-icon-not-touched span, :host /deep/ mat-step-header:nth-of-type(5) .mat-step-icon span, :host /deep/ mat-step-header:nth-of-type(5) .mat-step-icon-not-touched .mat-icon, :host /deep/ mat-step-header:nth-of-type(5) .mat-step-icon .mat-icon {
+    display: none;
+}
+:host /deep/ mat-step-header:nth-of-type(5) .mat-step-icon {
+    height: 20px;
+    width: 20px;
+    background-color: grey;
+}
+:host /deep/ mat-step-header:nth-of-type(5) .mat-step-icon-not-touched:after, :host /deep/ mat-step-header:nth-of-type(5) .mat-step-icon:after {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    background-color: grey;
+}
+:host /deep/ mat-step-header:nth-of-type(6) .mat-step-icon-not-touched span, :host /deep/ mat-step-header:nth-of-type(6) .mat-step-icon span, :host /deep/ mat-step-header:nth-of-type(6) .mat-step-icon-not-touched .mat-icon, :host /deep/ mat-step-header:nth-of-type(6) .mat-step-icon .mat-icon {
+    display: none;
+}
+:host /deep/ mat-step-header:nth-of-type(6) .mat-step-icon {
+    height: 20px;
+    width: 20px;
+    background-color: grey;
+}
+:host /deep/ mat-step-header:nth-of-type(6) .mat-step-icon-not-touched:after, :host /deep/ mat-step-header:nth-of-type(6) .mat-step-icon:after {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    background-color: grey;
+}
+:host /deep/ mat-step-header:nth-of-type(7) .mat-step-icon-not-touched span, :host /deep/ mat-step-header:nth-of-type(7) .mat-step-icon span, :host /deep/ mat-step-header:nth-of-type(7) .mat-step-icon-not-touched .mat-icon, :host /deep/ mat-step-header:nth-of-type(7) .mat-step-icon .mat-icon {
+    display: none;
+}
+:host /deep/ mat-step-header:nth-of-type(7) .mat-step-icon {
+    height: 20px;
+    width: 20px;
+    background-color: grey;
+}
+:host /deep/ mat-step-header:nth-of-type(7) .mat-step-icon-not-touched:after, :host /deep/ mat-step-header:nth-of-type(7) .mat-step-icon:after {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    background-color: grey;
+}
+
