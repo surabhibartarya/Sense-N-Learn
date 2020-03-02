@@ -62,8 +62,13 @@
 .mat-stepper-horizontal, .mat-stepper-vertical{
     margin-top: -24px;
     margin-bottom: -24px;
-    margin-left: 5%;
-    margin-right: 5%;}
+    margin-left: 8%;
+    margin-right: 11%;
+}
+:host /deep/ mat-step-header{    
+    
+    padding: 0 24px !important; 
+    width: 22px !important;}
    
 :host /deep/ mat-step-header .mat-step-label {
     overflow: visible;
