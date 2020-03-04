@@ -47,7 +47,13 @@
 .picturedisplay ul li{
     display: inline-block;
     list-style-type: none;
-    margin-right: 2%;
+    margin-right: 4%;
+    text-align: center;
+    margin-left: 2%;
+}
+.picturedisplay ul li img{
+    height: 80px;
+    width: 80px;
 }
 .textstyling{
     display: block;
