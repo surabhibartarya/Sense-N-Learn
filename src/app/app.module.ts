@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -40,7 +41,8 @@ const appRoutes:Routes = [
     GoogleChartsModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
-    MatStepperModule
+    MatStepperModule,
+    HttpClientModule
   ],
   providers: [GooglePieChartServiceService],
   bootstrap: [AppComponent]

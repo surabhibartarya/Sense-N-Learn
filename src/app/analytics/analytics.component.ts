@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GraphDataService } from './../graph-data.service';
+
 
 @Component({
   selector: 'app-analytics',
@@ -61,13 +63,7 @@ export class AnalyticsComponent implements OnInit {
 
    //Qty Damage column chart
    columnType = 'ColumnChart';
-   columnData = [
-      ["Q4 2018", 6000],
-      ["Q1 2019", 5800],
-      ["Q2 2019", 5200],
-      ["Q3 2019", 4900],
-      ["Q4 2019", 4500]
-   ];
+   columnData = [];
    columnColumnNames = ['Quarter', 'Quantity'];
    columnOptions = {
      legend: { position: 'top', alignment: 'end' },
@@ -124,9 +120,56 @@ export class AnalyticsComponent implements OnInit {
       legend:'none'
    }
 
-  constructor() { }
+   
+  constructor(private graphDataService : GraphDataService) { }
 
   ngOnInit() {
-  }
+     this.graphDataService.getDamageShipments().subscribe((data) => {
+            let graphData= [];
+            let a = Object.values(data);
+            a.forEach(element => {
+               let tempArr= [];
+               let quarter = element.Quarter;
+               tempArr.push(quarter);
+               let quantity = element.Quantity;
+               tempArr.push(quantity);
+               graphData.push(tempArr);
+            });
+            this.columnData = graphData;
+     })
 
+     //hazardousProducts service call
+     this.graphDataService.getHazardousProducts().subscribe((data) => {
+        let graphData= [];
+        let arrayHazardousProducts = Object.values(data);
+        arrayHazardousProducts.forEach(element => {
+            let tempArr= [];
+            let month = element.Month;
+            tempArr.push(month);
+            let hazardous = element.Hazardous;
+            tempArr.push(hazardous);
+            let nonHazardous = element["Non-Hazardous"];
+            tempArr.push(nonHazardous);
+            graphData.push(tempArr);
+        })
+        this.lineData = graphData;
+     })
+
+     //hazardousCategory service call
+     this.graphDataService.getHazardousCategory().subscribe((data) => {
+      let graphData= [];
+      let arrayHazardousCategory = Object.values(data);
+      arrayHazardousCategory.forEach(element => {
+          let tempArr= [];
+          let category = element.Category;
+          tempArr.push(category);
+          let fcl = element.FCL;
+          tempArr.push(fcl);
+          let lcl = element.LCL;
+          tempArr.push(lcl);
+          graphData.push(tempArr);
+      })
+      this.data = graphData;
+   })
+}
 }
