@@ -101,7 +101,7 @@ export class ChartsComponent {
         // Set property fields
         imageSeriesTemplate.propertyFields.latitude = "latitude";
         imageSeriesTemplate.propertyFields.longitude = "longitude";
-
+        
         // Add data for the three cities
         imageSeries.data = [{
           "latitude": 12.9716,
