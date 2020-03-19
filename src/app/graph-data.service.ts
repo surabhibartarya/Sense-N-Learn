@@ -20,4 +20,8 @@ export class GraphDataService {
     return this.http.get('http://localhost:4000/hazardousCategory');
   }
 
+  getThermalGraph(){
+    return this.http.get('http://localhost:4000/thermalGraph/Acetic Acid');
+  }
+
 }

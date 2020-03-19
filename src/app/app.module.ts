@@ -15,6 +15,7 @@ import { GooglePieChartServiceService } from './google-pie-chart-service.service
 import { BlockchaincomponentComponent } from './blockchaincomponent/blockchaincomponent.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatStepperModule} from '@angular/material/stepper';
+import { ChartsComponent } from './charts/charts.component';
 
 const appRoutes:Routes = [
   { path:'login', component:LoginComponent },
@@ -22,6 +23,7 @@ const appRoutes:Routes = [
   { path:'location', component:LocationComponent },
   { path:'analytics', component:AnalyticsComponent },
   { path:'blockchain', component:BlockchaincomponentComponent },
+  { path:'charts', component:ChartsComponent },
   { path: '', redirectTo: '/login',pathMatch: 'full'}
 ];
 
@@ -33,7 +35,8 @@ const appRoutes:Routes = [
     HeaderComponent,
     LocationComponent,
     AnalyticsComponent,
-    BlockchaincomponentComponent
+    BlockchaincomponentComponent,
+    ChartsComponent
   ],
   imports: [
     BrowserModule,
