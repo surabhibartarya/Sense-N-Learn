@@ -1,3 +1,4 @@
+import { MatStepperModule } from '@angular/material/stepper';
 import { Component, NgZone, OnInit } from '@angular/core';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
@@ -33,7 +34,43 @@ export class HomeComponent implements OnInit {
   destination = [] ;
   destinationPorts = [] ;
 
-  mapMarkers;
+  selectedSupplyRegion;
+  selectedSupplyPort;
+  selectedDestination;
+
+  markerData;
+
+  polygonSeries;
+  spiData = [];
+  region = [];
+  selectedRegion;
+  businessUnit = [];
+  selectedBusinessUnit;
+  product = [];
+  spiISO = [];
+  spiMarkers = [];
+  mapPosEvent;
+
+ centerFlag : boolean = false;
+ zoomed =3;
+
+  spiMapCenter = {
+    "EU" : {
+      "north" : 81.2804,
+      "south" : 35.8316,
+      "east" : 180,
+      "west" : -67.1968,
+      "zoom" : 1
+    },
+    "APAC" : {
+      "north" : 52.0701,
+      "south" : -43.6126,
+      "east" : 145.3476,
+      "west" : 68.1649,
+      "zoom" : 2
+    }
+  }
+
 
   constructor(private zone: NgZone , private graphDataService : GraphDataService , public router: Router) {}
   
@@ -52,6 +89,14 @@ export class HomeComponent implements OnInit {
   }
 
   worldMap(){
+    this.graphDataService.getMarkers().subscribe((serviceData) => {
+       this.markerData= Object.values(serviceData);
+       this.serviceData = this.markerData;
+       this.plotWorldMap();
+    })
+  }
+
+  plotWorldMap(){
     var chart = am4core.create("worldmapdiv", am4maps.MapChart);
 
         // Set map definition
@@ -86,13 +131,13 @@ export class HomeComponent implements OnInit {
         // Add data markers
         //imageSeries.data=[];
 
-        this.graphDataService.getMarkers().subscribe((serviceData) => {
-           let markerData= Object.values(serviceData);
+        //cc this.graphDataService.getMarkers().subscribe((serviceData) => {
+         //cc  let markerData= Object.values(serviceData);
            //Saving the data returned from server
-           this.serviceData = markerData;
+         //cc  this.serviceData = markerData;
            //Setting Supply Port Data
-           this.supplyRegion= [...new Set(markerData.map(item => item['Supply Region']))];
-            markerData.forEach(element => {
+           this.supplyRegion= [...new Set(this.markerData.map(item => item['Supply Region']))];
+            this.markerData.forEach(element => {
               //Pushing supply port info into marker data field.
               this.imageSeries.data.push( {latitude : element["Supply Coordinate"].Latitude , 
                                       longitude : element["Supply Coordinate"].Longitude , 
@@ -107,7 +152,7 @@ export class HomeComponent implements OnInit {
                                        flag: "../assets/images/blue_marker.svg"});
               });
               this.imageSeriesCopy =this.imageSeries.data;
-        })
+      //cc  })
  
           
       
@@ -167,175 +212,232 @@ export class HomeComponent implements OnInit {
 
   }
 
-  filterDropDownData(selectedItem,key){
+  /* filterDropDownData(selectedItem,key){
     console.log("sel",selectedItem);
     console.log("key",key);
     console.log(this.dropDownData);
-  }
+  } */
 
   supplyPortFilterDropDownData(selectedItem){
     this.destination = [];
     this.destinationPorts = [];
+    this.selectedSupplyRegion = selectedItem;
     this.dropDownData = this.serviceData.filter(element => {return element['Supply Region'] == selectedItem});
     this.supplyPorts= [...new Set(this.dropDownData.map(item => item['Supply Port']))];
     console.log(this.dropDownData);
     this.imageSeries.data = this.imageSeriesCopy.filter(element => {return element.markerDetails['Supply Region'] == selectedItem});
     console.log(this.imageSeries.data);
-
+    
   }
 
   destinationFilterDropDownData(selectedItem){
     this.destinationPorts = [];
-    this.dropDownData = this.dropDownData.filter(element => {return element['Supply Port'] == selectedItem });
+    this.selectedSupplyPort = selectedItem;
+    this.dropDownData = this.serviceData.filter(element => {return element['Supply Port'] == selectedItem && element['Supply Region'] == this.selectedSupplyRegion});
+    this.imageSeries.data = this.imageSeriesCopy.filter(element => {return element.markerDetails['Supply Port'] == selectedItem && element.markerDetails['Supply Region'] == this.selectedSupplyRegion});
     this.destination= [...new Set(this.dropDownData.map(item => item.Destination))];
   }
 
   destinationPortFilterDropDownData(selectedItem){
-    this.dropDownData = this.dropDownData.filter(element => {return element.Destination == selectedItem });
+    this.selectedDestination = selectedItem;
+    this.dropDownData = this.serviceData.filter(element => {return element.Destination == selectedItem && element['Supply Region'] == this.selectedSupplyRegion && element['Supply Port'] == this.selectedSupplyPort});
+    this.imageSeries.data = this.imageSeriesCopy.filter(element => {return element.markerDetails.Destination == selectedItem && element.markerDetails['Supply Region'] == this.selectedSupplyRegion && element.markerDetails['Supply Port'] == this.selectedSupplyPort});
     this.destinationPorts= [...new Set(this.dropDownData.map(item => item['Destination Port']))];
   }
 
   allDDSet(selectedItem){
-    this.dropDownData = this.dropDownData.filter(element => {return element['Destination Port'] == selectedItem });
+    this.dropDownData = this.serviceData.filter(element => {return element['Destination Port'] == selectedItem && element.Destination == this.selectedDestination && element['Supply Region'] == this.selectedSupplyRegion && element['Supply Port'] == this.selectedSupplyPort});
+    this.imageSeries.data = this.imageSeriesCopy.filter(element => {return element.markerDetails['Destination Port'] == selectedItem && element.markerDetails.Destination == this.selectedDestination && element.markerDetails['Supply Region'] == this.selectedSupplyRegion && element.markerDetails['Supply Port'] == this.selectedSupplyPort});
     console.log(this.dropDownData);
-    this.imageSeries.data = [{
-      "latitude": 12.9716,
-      "longitude": 77.5946,
-      "title": "Bangalore",
-      "flag": "../assets/images/blue_marker.svg"
-    }, {
-      "latitude": 40.712775,
-      "longitude": -74.005973,
-      "title": "New York",
-      "flag": "../assets/images/green_marker.svg"
-    }, {
-      "latitude": 51.5074,
-      "longitude": 0.1278,
-      "title": "London",
-      "flag": "../assets/images/green_marker.svg"
-    }]; 
   }
 
+  regionSelected(selectedItem){
+    this.product = [];
+    this.spiISO = [];
+    this.spiMarkers = [];
+    this.selectedRegion = selectedItem;
+    this.businessUnit = this.spiData.filter(element => {return element.Region == selectedItem});
+    this.businessUnit[0].countriesISO.forEach(element => {
+      this.spiISO.push(element);
+    });
+    this.spiData.forEach(element => {
+      if(element.Region == selectedItem)
+      { 
+        element.Locations.forEach( item => {
+          let markerData = {
+            "title": item.Product,
+            "latitude": item.Latitude,
+            "longitude": item.Longitude,
+            "product" : item.Product,
+            "bu" : element['Business Unit']
+          }
+        this.spiMarkers.push(markerData);
+        })
+      }
+    })
+    this.centerFlag = true;
+    this.plotshipmentPerformanceMap();
+    //this.centerCountries();
+    //this.updateCustomMarkers(this.mapPosEvent);
+    //this.centerCountries();
+  }
 
+  businessUnitSelected(selectedItem){
+    this.product = [];
+    this.selectedBusinessUnit = selectedItem;
+    let tempProduct = this.spiData.filter(element => {return element.Region == this.selectedRegion && element['Business Unit'] == selectedItem});
+    tempProduct.forEach(element => {
+      element.Products.forEach( item => {
+        this.product.push(item);
+      }) 
+    })
+    console.log(this.spiMarkers);
+    this.deleteMarkerChildren();
+    this.shipmentimageSeries.data = this.spiMarkers.filter(element => {return  element.bu == selectedItem});
+    //this.shipmentchart.zoomToMapObject(this.polygonSeries.getPolygonById("IN"));
+    //this.polygonSeries.zoomLevel = 1;
+    //this.centerCountries();
+    this.updateCustomMarkers(this.mapPosEvent);
+    this.centerCountries();
+  }
 
-shipmentPerformanceMap(){
+  productsSelected(selectedItem){
+    this.centerCountries();
+    this.deleteMarkerChildren();
+    this.shipmentimageSeries.data = this.spiMarkers.filter(element => {return  element.product == selectedItem});
+  }
 
-// Create map instance
- this.shipmentchart = am4core.create("shipmentMap", am4maps.MapChart);
+  centerCountries(){
+    var north, south, west, east, zoom;
+    console.log("centerCountries");
+    //var zoomTo = ["IN", "CN", "KZ"];
 
-// Set map definition
-this.shipmentchart.geodata = am4geodata_worldLow;
+    if(this.selectedRegion == "EU" || this.selectedRegion == "APAC")
+    {
+      let region  = this.selectedRegion;
+      north = this.spiMapCenter[region].north;
+      east = this.spiMapCenter[region].east;
+      south = this.spiMapCenter[region].south;
+      west = this.spiMapCenter[region].west;
+      zoom = this.spiMapCenter[region].zoom;
+      console.log(north,south,east,west);
+      //this.zoomed =this.zoomed + 1;
+      //this.shipmentchart.zoomToRectangle(north, east, south, west, 8, true);
+      console.log(this.zoomed);
+      this.shipmentchart.zoomToRectangle(north, east, south, west, zoom, true);
+    }
+    
+  // Find extreme coordinates for all pre-zoom countries
+  else {
+          for(let i = 0; i < this.spiISO.length; i++) {
+            //for(var i = 0; i < zoomTo.length; i++) {
+            var country = this.polygonSeries.getPolygonById(this.spiISO[i]);
+            console.log(this.spiISO[i]);
+            //var country = this.polygonSeries.getPolygonById(zoomTo[i]);
+            if (north == undefined || (country.north > north)) {
+              north = country.north;
+            }
+            if (south == undefined || (country.south < south)) {
+              south = country.south;
+            }
+            if (west == undefined || (country.west < west)) {
+              west = country.west;
+            }
+            if (east == undefined || (country.east > east)) {
+              east = country.east;
+            }
+            country.isActive = true
+          }
 
-// Set projection
-this.shipmentchart.projection = new am4maps.projections.Miller();
+          // Pre-zoom
+          this.shipmentchart.zoomToRectangle(north, east, south, west, 1, true);
+          //this.shipmentchart.zoomToRectangle(52.0701, 145.3476, -43.6126, 68.1649, 2, true);  //APAC
+          //this.shipmentchart.zoomToRectangle(81.2804, 180, 35.8316, -67.1968, 1, true);   //EU
+        }
+  }
 
-// Create map polygon series
-var polygonSeries = this.shipmentchart.series.push(new am4maps.MapPolygonSeries());
+  shipmentPerformanceMap(){
+    this.graphDataService.getSPI().subscribe((data) => {
+      this.spiData = Object.values(data);
+      this.region = [...new Set(this.spiData.map(item => item.Region))];
+      this.plotshipmentPerformanceMap();
+    })
 
-// Exclude Antartica
-polygonSeries.exclude = ["AQ"];
+  }
 
-// Make map load polygon (like country names) data from GeoJSON
-polygonSeries.useGeodata = true;
+  deleteMarkerChildren(){
+    this.shipmentimageSeries.mapImages.each(element => {
+     // console.log(element);
+      //console.log(element.htmlContainer.children.length);
+      for(let i=1;i<element.htmlContainer.children.length;i++){
+        let instance = element.htmlContainer.children[i];
+        instance.parentNode.removeChild(instance);
+      }
+    })
+  }
 
-// Configure series
-var polygonTemplate = polygonSeries.mapPolygons.template;
-polygonTemplate.tooltipText = "{name}";
-polygonTemplate.fill = this.shipmentchart.colors.getIndex(0).lighten(0.5);
+plotshipmentPerformanceMap(){
 
-// Create hover state and set alternative fill color
-var hs = polygonTemplate.states.create("hover");
-hs.properties.fill = this.shipmentchart.colors.getIndex(0);
+    // Create map instance
+    this.shipmentchart = am4core.create("shipmentMap", am4maps.MapChart);
 
-// Add image series
-this.shipmentimageSeries = this.shipmentchart.series.push(new am4maps.MapImageSeries());
-this.shipmentimageSeries.mapImages.template.propertyFields.longitude = "longitude";
-this.shipmentimageSeries.mapImages.template.propertyFields.latitude = "latitude";
-this.shipmentimageSeries.data = [ {
-  "title": "Brussels",
-  "latitude": 50.8371,
-  "longitude": 4.3676
-}, {
-  "title": "Copenhagen",
-  "latitude": 55.6763,
-  "longitude": 12.5681
-}, {
-  "title": "Paris",
-  "latitude": 48.8567,
-  "longitude": 2.3510
-}, {
-  "title": "Reykjavik",
-  "latitude": 64.1353,
-  "longitude": -21.8952
-}, {
-  "title": "Moscow",
-  "latitude": 55.7558,
-  "longitude": 37.6176
-}, {
-  "title": "Madrid",
-  "latitude": 40.4167,
-  "longitude": -3.7033
-}, {
-  "title": "London",
-  "latitude": 51.5002,
-  "longitude": -0.1262,
-  "url": "http://www.google.co.uk"
-}, {
-  "title": "Peking",
-  "latitude": 39.9056,
-  "longitude": 116.3958
-}, {
-  "title": "New Delhi",
-  "latitude": 28.6353,
-  "longitude": 77.2250
-}, {
-  "title": "Tokyo",
-  "latitude": 35.6785,
-  "longitude": 139.6823,
-  "url": "http://www.google.co.jp"
-}, {
-  "title": "Ankara",
-  "latitude": 39.9439,
-  "longitude": 32.8560
-}, {
-  "title": "Buenos Aires",
-  "latitude": -34.6118,
-  "longitude": -58.4173
-}, {
-  "title": "Brasilia",
-  "latitude": -15.7801,
-  "longitude": -47.9292
-}, {
-  "title": "Ottawa",
-  "latitude": 45.4235,
-  "longitude": -75.6979
-}, {
-  "title": "Washington",
-  "latitude": 38.8921,
-  "longitude": -77.0241
-}, {
-  "title": "Kinshasa",
-  "latitude": -4.3369,
-  "longitude": 15.3271
-}, {
-  "title": "Cairo",
-  "latitude": 30.0571,
-  "longitude": 31.2272
-}, {
-  "title": "Pretoria",
-  "latitude": -25.7463,
-  "longitude": 28.1876
-} ];
+    // Set map definition
+    this.shipmentchart.geodata = am4geodata_worldLow;
 
-// add events to recalculate map position when the map is moved or zoomed
-this.shipmentchart.events.on( "ready", this.updateCustomMarkers,this);
-this.shipmentchart.events.on( "mappositionchanged", this.updateCustomMarkers,this );
+    // Set projection
+    this.shipmentchart.projection = new am4maps.projections.Miller();
+
+    // Create map polygon series
+    this.polygonSeries = this.shipmentchart.series.push(new am4maps.MapPolygonSeries());
+
+    // Exclude Antartica
+    this.polygonSeries.exclude = ["AQ"];
+    if(this.spiISO.length > 0)
+      this.polygonSeries.include = this.spiISO;
+
+    // Make map load polygon (like country names) data from GeoJSON
+    this.polygonSeries.useGeodata = true;
+
+    // Configure series
+    var polygonTemplate = this.polygonSeries.mapPolygons.template;
+    polygonTemplate.tooltipText = "{name}";
+    polygonTemplate.fill = this.shipmentchart.colors.getIndex(0).lighten(0.5);
+
+    // Create hover state and set alternative fill color
+    var hs = polygonTemplate.states.create("hover");
+    hs.properties.fill = this.shipmentchart.colors.getIndex(0);
+
+    console.log(this.polygonSeries.include);
+
+    // Add image series
+    this.shipmentimageSeries = this.shipmentchart.series.push(new am4maps.MapImageSeries());
+    this.shipmentimageSeries.mapImages.template.propertyFields.longitude = "longitude";
+    this.shipmentimageSeries.mapImages.template.propertyFields.latitude = "latitude";
+    this.shipmentimageSeries.data = this.spiMarkers;
+  
+      // add events to recalculate map position when the map is moved or zoomed
+      this.shipmentchart.events.on( "ready", this.updateCustomMarkers,this);
+      this.shipmentchart.events.on( "mappositionchanged", this.updateCustomMarkers,this );
+
+      
+
+  
 }
 
 
 
 // this function will take current images on the map and create HTML elements for them
 updateCustomMarkers( event) {
+  /* if(this.centerFlag)
+  {
+    this.centerCountries();
+    
+    this.centerFlag = false;
+  } */
+  if(event.type == "ready")
+  this.centerCountries();
+  if(event.type == "mappositionchanged")
+   this.mapPosEvent =event;
   // go through all of the images
   this.shipmentimageSeries.mapImages.each((image) => {
     // check if it has corresponding HTML element
@@ -344,6 +446,7 @@ updateCustomMarkers( event) {
       image.dummyData = {
         externalElement: this.createCustomMarker(image)
       };
+      console.log(image.dummyData);
     }
 
     // reposition the element accoridng to coordinates
@@ -351,11 +454,6 @@ updateCustomMarkers( event) {
     image.dummyData.externalElement.style.top = xy.y + 'px';
     image.dummyData.externalElement.style.left = xy.x + 'px';
   });
-  
-  console.log(this.shipmentimageSeries.mapImages);
-  //console.log(this.shipmentchart);
-  //console.log(this.shipmentimageSeries.data.dummyData);
-
 }
 
 // this function creates and returns a new marker element
@@ -388,7 +486,6 @@ createCustomMarker( image ) {
 
   // append the marker to the map container
   chart.svgContainer.htmlElement.appendChild( holder );
-  console.log(chart.svgContainer.htmlElement);
   return holder;
 
   }

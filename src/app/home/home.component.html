@@ -99,7 +99,20 @@
                     </div>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <div></div>
+                    <div>
+                        <select (change)="regionSelected($event.target.value)">
+                            <option value="">Region</option>
+                            <option *ngFor="let data of region">{{data}}</option>
+                        </select>
+                        <select (change)="businessUnitSelected($event.target.value)">
+                            <option value="">BU</option>
+                            <option *ngFor="let data of businessUnit">{{data['Business Unit']}}</option>
+                        </select>
+                        <select (change)="productsSelected($event.target.value)">
+                            <option value="">Products</option>
+                            <option *ngFor="let data of product">{{data}}</option>
+                        </select>
+                    </div>
                     <div id="shipmentMap"></div>
                 </div>
             </div>

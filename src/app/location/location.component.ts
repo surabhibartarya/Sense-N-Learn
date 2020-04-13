@@ -22,7 +22,8 @@ export class LocationComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.state = window.history.state.data.markerDetails;
+    if(window.history.state.data)
+      this.state = window.history.state.data.markerDetails;
     console.log(this.state); //= window.history.state.data);
     this.plotRoute();
   }

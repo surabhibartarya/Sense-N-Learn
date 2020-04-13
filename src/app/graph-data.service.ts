@@ -6,26 +6,32 @@ import { HttpClient } from '@angular/common/http';
 })
 export class GraphDataService {
 
+  baseUrl = 'http://localhost:4000/';
+
   constructor( private http: HttpClient ) { }
 
   getDamageShipments() {
-    return this.http.get(`http://localhost:4000/damageShipments`);
+    return this.http.get(this.baseUrl+'damageShipments');
   }
 
   getHazardousProducts(){
-    return this.http.get('http://localhost:4000/hazardousProducts');
+    return this.http.get(this.baseUrl+'hazardousProducts');
   }
 
   getHazardousCategory(){
-    return this.http.get('http://localhost:4000/hazardousCategory');
+    return this.http.get(this.baseUrl+'hazardousCategory');
   }
 
   getThermalGraph(){
-    return this.http.get('http://localhost:4000/thermalGraph/Acetic Acid');
+    return this.http.get(this.baseUrl+'thermalGraph/Acetic Acid');
   }
 
   getMarkers(){
-    return this.http.get('http://localhost:4000/markers');
+    return this.http.get(this.baseUrl+'markers');
+  }
+
+  getSPI(){
+    return this.http.get(this.baseUrl+'shipmentPerformanceIndicator');
   }
 
 }
