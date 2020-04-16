@@ -1,7 +1,7 @@
 
 <app-header></app-header>
-<p>Suhas{{state}}</p>
-<div class="row">
+<p>{{state}}</p>
+<div class="row" style="margin-bottom: 12px;">
     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
         <p class="greybackground">
             <img src="assets/images/bluedot.png" alt="delivery location" class="dots">
@@ -36,14 +36,16 @@
     </div>
 </div>
 <div class="row" style="margin-top: 5px;">
-    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-        <div id="routemapdiv" style="width: 100%;"></div>
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 greybackground" style="box-shadow:2px 2px 5px #000;border:1px solid purple">
+        <div id="routemapdiv" style="width: 100%; height:300px;"></div>
     </div>
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-        <ul class="newslist">
+        <ul class="newslist greybackground" style="border:1px solid purple">
             <li>Predicted storm in Arabian sea for next 48 hours.</li>
             <li>All shipments from Gulf of Mexico to suffer due to storm katrina.</li>
             <li>Shipment Almara en-route to Chennai marked safe during storm in Arabian sea.</li>
+            <li>Chennai port to halt work due to labor issues on port. </li>
+            <li>200 tons of HAZ product spill at port of Mumbai clearance to take a week shipments to be delayed.</li>
             <li>Chennai port to halt work due to labor issues on port. </li>
             <li>200 tons of HAZ product spill at port of Mumbai clearance to take a week shipments to be delayed.</li>
         </ul>

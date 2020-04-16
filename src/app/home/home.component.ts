@@ -51,8 +51,22 @@ export class HomeComponent implements OnInit {
   spiMarkers = [];
   mapPosEvent;
 
- centerFlag : boolean = false;
- zoomed =3;
+ thermalGraphData = [];
+ thermalGraphDropDown;
+ thermalGraphChart;
+
+shipmentsIncrease = 5;
+onTimeShipmentIncrease = 7;
+fclBookingIncrease = 15;
+
+ currentVsImprovement : {
+	"noShipments" : 120,
+	"noOnTimeShipments" : 72,
+	"noFclShipments" : 120,
+	"shipmentsIncrease" : 5,
+	"onTimeShipmentIncrease" : 7,
+	"fclBookingIncrease" :16
+}
 
   spiMapCenter = {
     "EU" : {
@@ -72,6 +86,7 @@ export class HomeComponent implements OnInit {
   }
 
 
+  
   constructor(private zone: NgZone , private graphDataService : GraphDataService , public router: Router) {}
   
   ngOnInit(){   }
@@ -170,24 +185,27 @@ export class HomeComponent implements OnInit {
 
   thermalGraph(){
 
-    let chart = am4core.create("chartdiv", am4charts.XYChart);
-      var data= [];
+     this.thermalGraphChart = am4core.create("chartdiv", am4charts.XYChart);
 
       //Getting thermal data from API and then setting the chart
       this.graphDataService.getThermalGraph().subscribe((serviceData) => {
         let thermalData = Object.values(serviceData);
         thermalData.forEach(element => {
           //data.push({date : element.Date , open: parseInt(element.Threshold), close: parseInt(element[" Avg Temperature  "])});
-          data.push({date : element.Date , threshold: element.Threshold, avgTemp: element["Avg Temperature"]});
+          //data.push({date : element.Date , threshold: element.Threshold, avgTemp: element["Avg Temperature"]});
+          this.thermalGraphData.push({date : element.Date , threshold: element.Threshold, avgTemp: element["Avg Temperature"],chemicalName : element["Chemical Name"]});
         })
-        chart.data = data;
 
-        var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+        this.thermalGraphDropDown =  [...new Set(this.thermalGraphData.map(item => item.chemicalName))];
 
-        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        this.thermalGraphChart.data = this.thermalGraphData.filter(element => {return element.chemicalName == this.thermalGraphDropDown[0]});;
+
+        var dateAxis = this.thermalGraphChart.xAxes.push(new am4charts.DateAxis());
+
+        var valueAxis = this.thermalGraphChart.yAxes.push(new am4charts.ValueAxis());
         valueAxis.tooltip.disabled = true;
 
-        var series = chart.series.push(new am4charts.LineSeries());
+        var series = this.thermalGraphChart.series.push(new am4charts.LineSeries());
         series.dataFields.dateX = "date";
         series.dataFields.openValueY = "threshold";
         series.dataFields.valueY = "avgTemp";
@@ -197,19 +215,24 @@ export class HomeComponent implements OnInit {
         series.defaultState.transitionDuration = 1000;
         series.tensionX = 0.8;
 
-        var series2 = chart.series.push(new am4charts.LineSeries());
+        var series2 = this.thermalGraphChart.series.push(new am4charts.LineSeries());
         series2.dataFields.dateX = "date";
         series2.dataFields.valueY = "threshold";
         series2.sequencedInterpolation = true;
         series2.defaultState.transitionDuration = 1500;
-        series2.stroke = chart.colors.getIndex(6);
+        series2.stroke = this.thermalGraphChart.colors.getIndex(6);
         series2.tensionX = 0.8;
 
-        chart.cursor = new am4charts.XYCursor();
-        chart.cursor.xAxis = dateAxis;
-        chart.scrollbarX = new am4core.Scrollbar();
+        this.thermalGraphChart.cursor = new am4charts.XYCursor();
+        this.thermalGraphChart.cursor.xAxis = dateAxis;
+        //chart.scrollbarX = new am4core.Scrollbar();
       });
 
+  }
+
+  chemicalChanged(selectedItem)
+  {
+    this.thermalGraphChart.data = this.thermalGraphData.filter(element => {return element.chemicalName == selectedItem});;
   }
 
   /* filterDropDownData(selectedItem,key){
@@ -275,7 +298,6 @@ export class HomeComponent implements OnInit {
         })
       }
     })
-    this.centerFlag = true;
     this.plotshipmentPerformanceMap();
     //this.centerCountries();
     //this.updateCustomMarkers(this.mapPosEvent);
@@ -297,6 +319,7 @@ export class HomeComponent implements OnInit {
     //this.shipmentchart.zoomToMapObject(this.polygonSeries.getPolygonById("IN"));
     //this.polygonSeries.zoomLevel = 1;
     //this.centerCountries();
+    this.setDonutData();
     this.updateCustomMarkers(this.mapPosEvent);
     this.centerCountries();
   }
@@ -305,6 +328,26 @@ export class HomeComponent implements OnInit {
     this.centerCountries();
     this.deleteMarkerChildren();
     this.shipmentimageSeries.data = this.spiMarkers.filter(element => {return  element.product == selectedItem});
+  }
+
+  setDonutData(){
+    let newGraphData;
+    newGraphData = this.spiData.filter(element => {return element.Region == this.selectedRegion && element['Business Unit'] == this.selectedBusinessUnit});
+    this.fclData = [
+      //['Sales Point 2nd Qtr', 0],
+      ['No of FCL shipments', newGraphData[0].currentVsImprovement.noFclShipments]
+    ];
+    this.otsData = [
+      ['No of delayed shipments', 100 - newGraphData[0].currentVsImprovement.noOnTimeShipments],
+      ['No of on time shipments', newGraphData[0].currentVsImprovement.noOnTimeShipments]
+    ];
+    this.tsData = [
+      //['Sales Point 2nd Qtr', 0],
+      ['No of shipments', newGraphData[0].currentVsImprovement.noShipments]
+    ];
+    this.shipmentsIncrease = newGraphData[0].currentVsImprovement.shipmentsIncrease;
+    this.onTimeShipmentIncrease = newGraphData[0].currentVsImprovement.onTimeShipmentIncrease;
+    this.fclBookingIncrease = newGraphData[0].currentVsImprovement.fclBookingIncrease;
   }
 
   centerCountries(){
@@ -320,11 +363,8 @@ export class HomeComponent implements OnInit {
       south = this.spiMapCenter[region].south;
       west = this.spiMapCenter[region].west;
       zoom = this.spiMapCenter[region].zoom;
-      console.log(north,south,east,west);
-      //this.zoomed =this.zoomed + 1;
-      //this.shipmentchart.zoomToRectangle(north, east, south, west, 8, true);
-      console.log(this.zoomed);
-      this.shipmentchart.zoomToRectangle(north, east, south, west, zoom, true);
+      this.shipmentchart.zoomToRectangle(north, east, south, west+1, zoom, true);
+      setTimeout(() => {this.shipmentchart.zoomToRectangle(north, east, south, west, zoom, true); }, 10);
     }
     
   // Find extreme coordinates for all pre-zoom countries
@@ -401,7 +441,7 @@ plotshipmentPerformanceMap(){
     // Configure series
     var polygonTemplate = this.polygonSeries.mapPolygons.template;
     polygonTemplate.tooltipText = "{name}";
-    polygonTemplate.fill = this.shipmentchart.colors.getIndex(0).lighten(0.5);
+  //  polygonTemplate.fill = this.shipmentchart.colors.getIndex(0).lighten(0.5);
 
     // Create hover state and set alternative fill color
     var hs = polygonTemplate.states.create("hover");
@@ -496,16 +536,21 @@ createCustomMarker( image ) {
    fclTitle = 'On time shipments';
    fclType = 'PieChart';
    fclData = [
-      ['Sales Point 2nd Qtr', 28],
-      ['Sales Point 1st Qtr', 72]
+      ['Sales Point 2nd Qtr', 0],
+      ['Sales Point 1st Qtr', 78]
    ];
    fclOptions = {    
       pieHole:0.8,
       chartArea:{left:0,width:'100%',height:'100%'},
       colors:['CDCDCD','white'],
       pieSliceBorderColor:'#6f30a0',
+      pieSliceTextStyle: {
+        color: 'black',
+        fontSize: 14
+      },
       width: 50,
       height : 50,
+      pieSliceText: 'value',
       legend:'none'
    }
 
@@ -513,16 +558,23 @@ createCustomMarker( image ) {
    otsTitle = 'On time shipments';
    otsType = 'PieChart';
    otsData = [
-      ['Sales Point 2nd Qtr', 28],
-      ['Sales Point 1st Qtr', 72]
+      ['Sales Point 2nd Qtr', 22],
+      ['Sales Point 1st Qtr', 78]
    ];
    otsOptions = {    
       pieHole:0.8,
       chartArea:{left:0,width:'100%',height:'100%'},
-      colors:['CDCDCD','white'],
+      colors:['white','CDCDCD'],
       pieSliceBorderColor:'#6f30a0',
+      pieSliceTextStyle: {
+        color: 'black'
+      },
       width: 50,
       height : 50,
+      /* slices: {
+        0: { color: "red" , textStyle :{fontSize:12} },
+        1: { textStyle :{fontSize:1} }
+      }, */
       legend:'none'
    }
 
@@ -530,8 +582,8 @@ createCustomMarker( image ) {
    tsTitle = 'On time shipments';
    tsType = 'PieChart';
    tsData = [
-      ['Sales Point 2nd Qtr', 28],
-      ['Sales Point 1st Qtr', 72]
+      ['Sales Point 2nd Qtr', 0],
+      ['Sales Point 1st Qtr', 82]
    ];
    tsOptions = {    
       pieHole:0.8,
@@ -540,6 +592,11 @@ createCustomMarker( image ) {
       pieSliceBorderColor:'#6f30a0',
       width: 50,
       height : 50,
+      pieSliceText: 'value',
+      pieSliceTextStyle: {
+        color: 'black',
+        fontSize: 14
+      },
       legend:'none'
    }
 

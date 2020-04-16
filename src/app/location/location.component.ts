@@ -32,16 +32,16 @@ export class LocationComponent implements OnInit {
     let chart = am4core.create("routemapdiv", am4maps.MapChart);
     chart.geodata = am4geodata_worldLow;
     chart.projection = new am4maps.projections.Miller();
-    chart.homeZoomLevel = 2.5;
+    /* chart.homeZoomLevel = 0.8;
     chart.homeGeoPoint = {
         latitude: 38,
         longitude: -60
     };
-
+ */
     // Create map polygon series
     let polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
     polygonSeries.useGeodata = true;
-    polygonSeries.mapPolygons.template.fill = chart.colors.getIndex(0).lighten(0.5);
+   // polygonSeries.mapPolygons.template.fill = chart.colors.getIndex(0).lighten(0.5);
     polygonSeries.mapPolygons.template.nonScalingStroke = true;
     polygonSeries.exclude = ["AQ"];
 

@@ -1,18 +1,27 @@
 .alertbox{
-    border: 1px solid;
+    border: 1px solid purple;
     padding: 5px;
     box-shadow: 2px 2px 5px #000;
+    background-color: #f8f8f8;
+    margin-top: 5px;
 }
-.alertbox li{
+.alertbox1 li{
     list-style-type: none;
-    padding: 5px;
+    padding: 3px 5px;
     color: #333;
     border: 1px solid #000;
-    margin-bottom: 2px;
+    margin-bottom: 4.4px;
 }
 
-
-  
+.alertsection h3{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.alertsection h4{
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.alertsection ul{margin-bottom: 0px;padding-left: 0px;} 
 
   #shipmentMap {
     /*width: 100%;
@@ -134,4 +143,40 @@
   .shipmentDiv{
     border-radius: 15px;
     border: 2px solid #002060;
+    padding:4px;
+  }
+  .selboxcontainer{
+    margin-bottom: 20px;
+  }
+
+  .selboxcontainer select{
+    width: 150px;
+    margin: 0px 10px;
+    padding: 5px;
+    border-radius: 10px;
+  }
+  .selboxcontaineracid{margin-bottom: 5px;}
+  .selboxcontaineracid select{
+    width: auto;
+  }
+  .rowmask{
+    margin-left: 0px;
+    margin-bottom: 3px;
+  }
+  .buunitselect select{
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 5px;
+    width: 52px;
+    margin-right: 5px;
+  }
+  .shipmentgraphtext{
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+  #sel1{
+    width:76px;
+  }
+  #sel3{
+    width:82px;
   }

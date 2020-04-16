@@ -21,8 +21,9 @@ export class AnalyticsComponent implements OnInit {
     options ={
       legend: { position: 'top', alignment: 'end' },
       chartArea: {
-        //width: '100%'
+        backgroundColor: '#f8f8f8'
       },
+      height: 150,
       //width: '100%',
       series: [{color: '#cc99ff'}, {color: '#6f30a0'}]
     }
@@ -50,7 +51,8 @@ export class AnalyticsComponent implements OnInit {
    lineOptions = {   
     legend: { position: 'top', alignment: 'end' },
     chartArea: {
-      width: '100%'
+      width: '100%',
+      backgroundColor: '#f8f8f8'
     },
     hAxis: {
          title: 'Month'
@@ -58,7 +60,8 @@ export class AnalyticsComponent implements OnInit {
     curveType: 'function',
     pointSize:5,
     series: [{color: '#02b34b'}, {color: '#008bdb'}],
-    lineDashStyle: [2, 2]
+    lineDashStyle: [2, 2],
+    height: 150
    };
 
    //Qty Damage column chart
@@ -68,8 +71,11 @@ export class AnalyticsComponent implements OnInit {
    columnOptions = {
      legend: { position: 'top', alignment: 'end' },
     chartArea: {
-      width: '100%'
-    }
+      width: '100%',
+      height:'50%',
+      backgroundColor: '#f8f8f8'
+    },
+    height: 150
   }
     
 //On time shipments doughnut chart
@@ -81,11 +87,16 @@ export class AnalyticsComponent implements OnInit {
    ];
    doughnutOneOptions = {    
       pieHole:0.8,
-      chartArea:{left:0,width:'50%',height:'75%'},
+      chartArea:{width:'90%',height:'75%' , backgroundColor: '#f8f8f8'},
       colors:['CDCDCD','white'],
       pieSliceBorderColor:'#6f30a0',
-      width: 200,
-      legend:'none'
+      pieSliceTextStyle: {
+         color: 'black',
+       },
+      width: 170,
+      legend:'none',
+      height: 150,
+      fontSize: 14
    }
 
    //Freight contribution per shipment
@@ -97,11 +108,16 @@ export class AnalyticsComponent implements OnInit {
    ];
    doughnutTwoOptions = {    
       pieHole:0.8,
-      chartArea:{left:0,width:'50%',height:'75%'},
+      chartArea:{width:'90%',height:'75%', backgroundColor: '#f8f8f8'},
       colors:['CDCDCD','white'],
       pieSliceBorderColor:'#6f30a0',
-      width: 200,
-      legend:'none'
+      pieSliceTextStyle: {
+         color: 'black',
+       },
+      width: 170,
+      legend:'none',
+      height: 150,
+      fontSize: 14
    }
 
    //Intra warehouse shipments
@@ -111,13 +127,20 @@ export class AnalyticsComponent implements OnInit {
       ['Sales Point 2nd Qtr', 84],
       ['Sales Point 1st Qtr', 16]
    ];
+   
    doughnutThreeOptions = {    
       pieHole:0.8,
-      chartArea:{left:0,width:'50%',height:'75%'},
+      chartArea:{width:'90%',height:'75%', backgroundColor: '#f8f8f8'},
       colors:['CDCDCD','white'],
       pieSliceBorderColor:'#6f30a0',
-      width: 200,
-      legend:'none'
+      pieSliceTextStyle: {
+         color: 'black',
+       },
+      width: 170,
+      legend:'none',
+      height: 150,
+      fontSize: 14,
+      
    }
 
    

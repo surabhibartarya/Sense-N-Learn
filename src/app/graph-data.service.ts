@@ -23,7 +23,7 @@ export class GraphDataService {
   }
 
   getThermalGraph(){
-    return this.http.get(this.baseUrl+'thermalGraph/Acetic Acid');
+    return this.http.get(this.baseUrl+'thermalGraph');
   }
 
   getMarkers(){

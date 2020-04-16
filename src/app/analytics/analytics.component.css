@@ -4,4 +4,15 @@
     text-align: center;
     margin-bottom: 5px;
     height: 230px;
+    background-color: #f8f8f8;
+    box-shadow: 2px 2px 5px #000;
+}
+.graph-head-text{
+    background: purple;
+    color: #fff;
+    font-size: 16px;
+    padding: 5px;
+    text-align: left;
+    width: fit-content;
+    margin-top: -7px;
 }
